@@ -2,6 +2,16 @@
 
 set -e
 
+mkdir -p $ROCM_GIT_DIR
+
+cd $ROCM_GIT_DIR
+
+
+git clone -b $ROCM_GIT_TAG https://github.com/ROCm-Developer-Tools/ROCclr.git
+
+git clone -b $ROCM_GIT_TAG  https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime.git
+
+
 mkdir -p $ROCM_BUILD_DIR/rocm-opencl-runtime
 cd $ROCM_BUILD_DIR/rocm-opencl-runtime
 pushd .
@@ -22,11 +32,6 @@ cmake \
     $ROCM_GIT_DIR/ROCm-OpenCL-Runtime
 ninja
 ninja package
-sudo dpkg -i *.deb
-
-END_TIME=`date +%s`
-EXECUTING_TIME=`expr $END_TIME - $START_TIME`
-echo "elapse : "$EXECUTING_TIME"s"
 
 popd
 
